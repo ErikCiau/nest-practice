@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Headers, Param, Req, Session } from '@nestjs/common';
 import { Request } from 'express';
+import { IndentifierService } from 'src/indentifier/indentifier.service';
 import { SharedService } from 'src/shared/shared.service';
 
 type Cat = {
@@ -13,7 +14,8 @@ export class CatsController {
   private cats: Cat[] = [{ name: 'Mifi', age: 2, propietary: 'Erik Ciau' }]
 
   constructor(
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private uuid: IndentifierService
   ) {
 
   }
@@ -93,4 +95,10 @@ export class CatsController {
   greet() {
     return this.sharedService.getGreet('Mitifu')
   }
+
+  @Get('generate')
+  generate(): string {
+    return this.uuid.generate()
+  }
+
 }
